@@ -70,10 +70,11 @@
             // If the user guesses the wrong answer his guesses left goes down by 1 and the wrong letter gets added to the array.
             if (userGuess !== letterToGuess) {
                 guessLeft.innerHTML = guessesLeft --;
+                guessSoFar.innerHTML = guessesSoFar;
             }
 
             // If the guesses left reaches 0, the loss total goes up by 1, the letters guessed array is emptied, and the computer randomly selects a new letter and logs it to the console.
-            if (guessesLeft === 1){
+            if (guessesLeft === -1){
                 losses ++;
                 lossesNumber.innerHTML = losses;
                 guessesLeft = 9;
