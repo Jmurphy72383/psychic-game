@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Psychic Game</title>
+</head>
+<body style="margin: 0; background-color: black;">
+    <header style="background: linear-gradient(firebrick,yellow, blue); margin-top: 0; height: 100px;">
+        <h1 style="text-align: center; font-size: 60px; color: black;">&bigstar;&bigstar; The Psychic Game &bigstar;&bigstar;</h1>   
+    </header>
+    
+    <div style="width: 60%; margin-right: auto; margin-left: auto; border: 5px solid firebrick; background-color: whitesmoke; margin-top: 25px;">
+        <div style="padding: 20px;">
+            <h2 style="font-size: 36px; color: firebrick;">Guess what letter I'm thinking of....</h2>
+            <br>
+            <p style="font-weight: bold;">Wins: <span id="wins"></span></p>
+            <br>
+            <p style="font-weight: bold;">Losses: <span id="losses"></span></p>
+            <br>
+            <p style="font-weight: bold;">Guesses Left: <span id="guessesLeft"></span></p>
+            <br>
+            <p style="font-weight: bold;">Guesses So Far: <span id="guessesSoFar"></span></p>
+        </div>
+    </div>
+    <script>
+        // Setting the variables in use for this game. 
+        var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        var wins = 0;
+        var losses = 0;
+        var guessesLeft = 9;
+        var guessesSoFar = [];
+        var letterToGuess;
+        var userGuess;
+
+        // Selects the id's in the span tag to update them with the wins, losses, guesses left, and letter choices.
+        var winsNumber = document.getElementById('wins');
+        var lossesNumber = document.getElementById('losses');
+        var guessLeft = document.getElementById('guessesLeft');
+        var guessSoFar = document.getElementById('guessesSoFar');
+        
+        // The formula the computer uses to select a random number from the letters array.
+        letterToGuess = letters[Math.floor(Math.random() * letters.length)];
+        console.log(letterToGuess);
+
+        guessLeft.innerHTML = guessesLeft;
+        
+        // Captures the event of the user pressing a key and records it.
+        document.onkeyup = function(event){
+            var userGuess = event.key;
+            
+            // If the user chooses a letter that hasnt yet been selected, it gets added to the array.  Also, if the user selects a key outside of the letters array, it doesnt get added to the guessesSoFar array.
+            if (guessesSoFar.indexOf(userGuess) === -1 && letters.indexOf(userGuess) >= 0) {
+                guessesSoFar.push(userGuess);
+            }
+
+            // If the user guesses the correct letter, the wins total goes up by 1, the guesses left resets to 9, the letters guessed array is emptied, and the computer randomly selects a new letter and logs it to the console.
+            if (userGuess == letterToGuess) {
+                wins ++;
+                winsNumber.innerHTML = wins;
+                guessesLeft = 9;
+                guessLeft.innerHTML = guessesLeft;
+                guessesSoFar = []; 
+                guessSoFar.innerHTML = guessesSoFar;
+                letterToGuess = letters[Math.floor(Math.random() * letters.length)];
+                console.log(letterToGuess);   
+                } 
+
+            // If the user guesses the wrong answer his guesses left goes down by 1 and the wrong letter gets added to the array.
+            if (userGuess != letterToGuess) {
+                guessLeft.innerHTML = guessesLeft --;
+                guessSoFar.innerHTML = guessesSoFar;
+            }
+
+            // If the guesses left reaches 0, the loss total goes up by 1, the letters guessed array is emptied, and the computer randomly selects a new letter and logs it to the console.
+            if (guessesLeft === -1){
+                losses ++;
+                lossesNumber.innerHTML = losses;
+                guessesLeft = 9;
+                guessLeft.innerHTML = guessesLeft;
+                guessesSoFar = []; 
+                guessSoFar.innerHTML = guessesSoFar;
+                letterToGuess = letters[Math.floor(Math.random() * letters.length)];
+                console.log(letterToGuess);
+            }
+        };
+    </script>
+</body>
+</html>
